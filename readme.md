@@ -63,10 +63,75 @@ HW03
 
 觀察C語言是如何 pass and return 參數
 
-2.實驗步驟
+2.calling conventions介紹
 ---
-1. 設計測試程式 main.c ，從 _start 開始後依序執行
 
+我們在使用函式呼叫時牽涉到的參數傳遞，並不只是單純跳到那個Address執行程式碼再跳回來這麼簡單，呼叫副程式的主程式，需要知道怎麼填參數，副程式才能接到參
+數後進行處理，再將結果，傳給主程式，所以這段協定，稱之為Calling Convention(呼叫協定)。
+
+3.AAPCS  Procedure Call Standard for the ARM® Architecture
+---
+
+THE BASE PROCEDURE CALL STANDARD
+
+1. **Core registers**
+
+![](https://i.imgur.com/hF3gmGa.png)
+
+The first four registers r0-r3 (a1-a4) are used to pass argument values into a subroutine and to return a result
+value from a function. They may also be used to hold intermediate values within a routine (but, in general, only
+between subroutine calls). 
+
+2. **Subroutine Calls**
+
+Both the ARM and Thumb instruction sets contain a primitive subroutine call instruction, **BL, which performs a
+branch-with-link operation.** The effect of executing BL is to transfer the sequentially next value of the program
+counter **—the return address—into the link register (LR)** and **the destination address into the program counter
+(PC)**. Bit 0 of the link register will be set to 1 if the BL instruction was executed from Thumb state, and to 0 if
+executed from ARM state. The result is to transfer control to the destination address, passing the return address in
+LR as an additional parameter to the called subroutine.
+
+3. **Result Return**
+
+**A Half-precision Floating Point Type is returned in the least significant 16 bits of r0.**
+
+A Fundamental Data Type that is smaller than 4 bytes is zero- or sign-extended to a word and returned in r0.
+
+4. **Parameter Passing**
+
+The base standard provides for passing arguments in core registers (r0-r3) and on the stack. For subroutines that
+take a small number of parameters, only registers are used, greatly reducing the overhead of a call.
+
+4.實驗步驟
+---
+1. 設計測試程式 main.c ，從 reset_handler 開始後依序執行，觀察function with 2 parameters 和 function with 5 parameters 的不同
+
+main.c
+
+```c
+int sum(int a,int b){
+	int c = a+b;
+	return c;
+}
+int arithmetic(int a,int b,int c,int d,int e){
+	int f = (a+b)+(c*d)-e;
+	return f;
+}
+void reset_handler(void)
+{
+	sum(10,20);
+	arithmetic(1,2,3,4,5);
+	/*int a1,a2,a3,a4,a5;
+	a1=10;
+	a2=20;
+	a3=30;
+	a4=40;
+	a5=50;
+	arithmetic(a1,a2,a3,a4,a5);*/
+	while (1)
+		;
+}
+```
 ```
 Disassembly of section .mytext:
 
@@ -170,27 +235,4 @@ Disassembly of section .ARM.attributes:
 
 
 ```
-```c
-int sum(int a,int b){
-	int c = a+b;
-	return c;
-}
-int arithmetic(int a,int b,int c,int d,int e){
-	int f = (a+b)+(c*d)-e;
-	return f;
-}
-void reset_handler(void)
-{
-	sum(10,20);
-	arithmetic(1,2,3,4,5);
-	/*int a1,a2,a3,a4,a5;
-	a1=10;
-	a2=20;
-	a3=30;
-	a4=40;
-	a5=50;
-	arithmetic(a1,a2,a3,a4,a5);*/
-	while (1)
-		;
-}
-```
+
