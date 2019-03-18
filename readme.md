@@ -170,7 +170,7 @@ Disassembly of section .ARM.attributes:
 
 
 ```
-```clike
+```c
 int sum(int a,int b){
 	int c = a+b;
 	return c;
