@@ -117,17 +117,18 @@ int arithmetic(int a,int b,int c,int d,int e){
 	int f = (a+b)+(c*d)-e;
 	return f;
 }
+int pointer(int *a,int *b,int *c){
+	int d = *a + *b + *c;
+	return d;
+}
 void reset_handler(void)
 {
+	int a = 100;
+	int b = 200;
+	int c = 300;
 	sum(10,20);
 	arithmetic(1,2,3,4,5);
-	/*int a1,a2,a3,a4,a5;
-	a1=10;
-	a2=20;
-	a3=30;
-	a4=40;
-	a5=50;
-	arithmetic(a1,a2,a3,a4,a5);*/
+	pointer(&a,&b,&c);
 	while (1)
 		;
 }
@@ -141,7 +142,7 @@ Disassembly of section .mytext:
 
 00000000 <sum-0x8>:
    0:	20000100 	andcs	r0, r0, r0, lsl #2
-   4:	0000005d 	andeq	r0, r0, sp, asr r0
+   4:	00000089 	andeq	r0, r0, r9, lsl #1
 
 00000008 <sum>:
    8:	b480      	push	{r7}
@@ -186,26 +187,63 @@ Disassembly of section .mytext:
   58:	4770      	bx	lr
   5a:	bf00      	nop
 
-0000005c <reset_handler>:
-  5c:	b580      	push	{r7, lr}
-  5e:	b082      	sub	sp, #8
-  60:	af02      	add	r7, sp, #8
-  62:	200a      	movs	r0, #10
-  64:	2114      	movs	r1, #20
-  66:	f7ff ffcf 	bl	8 <sum>
-  6a:	2305      	movs	r3, #5
-  6c:	9300      	str	r3, [sp, #0]
-  6e:	2001      	movs	r0, #1
-  70:	2102      	movs	r1, #2
-  72:	2203      	movs	r2, #3
-  74:	2304      	movs	r3, #4
-  76:	f7ff ffd7 	bl	28 <arithmetic>
-  7a:	e7fe      	b.n	7a <reset_handler+0x1e>
+0000005c <pointer>:
+  5c:	b480      	push	{r7}
+  5e:	b087      	sub	sp, #28
+  60:	af00      	add	r7, sp, #0
+  62:	60f8      	str	r0, [r7, #12]
+  64:	60b9      	str	r1, [r7, #8]
+  66:	607a      	str	r2, [r7, #4]
+  68:	68fb      	ldr	r3, [r7, #12]
+  6a:	681a      	ldr	r2, [r3, #0]
+  6c:	68bb      	ldr	r3, [r7, #8]
+  6e:	681b      	ldr	r3, [r3, #0]
+  70:	441a      	add	r2, r3
+  72:	687b      	ldr	r3, [r7, #4]
+  74:	681b      	ldr	r3, [r3, #0]
+  76:	4413      	add	r3, r2
+  78:	617b      	str	r3, [r7, #20]
+  7a:	697b      	ldr	r3, [r7, #20]
+  7c:	4618      	mov	r0, r3
+  7e:	371c      	adds	r7, #28
+  80:	46bd      	mov	sp, r7
+  82:	f85d 7b04 	ldr.w	r7, [sp], #4
+  86:	4770      	bx	lr
+
+00000088 <reset_handler>:
+  88:	b580      	push	{r7, lr}
+  8a:	b086      	sub	sp, #24
+  8c:	af02      	add	r7, sp, #8
+  8e:	2364      	movs	r3, #100	; 0x64
+  90:	60fb      	str	r3, [r7, #12]
+  92:	23c8      	movs	r3, #200	; 0xc8
+  94:	60bb      	str	r3, [r7, #8]
+  96:	f44f 7396 	mov.w	r3, #300	; 0x12c
+  9a:	607b      	str	r3, [r7, #4]
+  9c:	200a      	movs	r0, #10
+  9e:	2114      	movs	r1, #20
+  a0:	f7ff ffb2 	bl	8 <sum>
+  a4:	2305      	movs	r3, #5
+  a6:	9300      	str	r3, [sp, #0]
+  a8:	2001      	movs	r0, #1
+  aa:	2102      	movs	r1, #2
+  ac:	2203      	movs	r2, #3
+  ae:	2304      	movs	r3, #4
+  b0:	f7ff ffba 	bl	28 <arithmetic>
+  b4:	f107 010c 	add.w	r1, r7, #12
+  b8:	f107 0208 	add.w	r2, r7, #8
+  bc:	1d3b      	adds	r3, r7, #4
+  be:	4608      	mov	r0, r1
+  c0:	4611      	mov	r1, r2
+  c2:	461a      	mov	r2, r3
+  c4:	f7ff ffca 	bl	5c <pointer>
+  c8:	e7fe      	b.n	c8 <reset_handler+0x40>
+  ca:	bf00      	nop
 
 Disassembly of section .comment:
 
 00000000 <.comment>:
-   0:	3a434347 	bcc	10d0d24 <reset_handler+0x10d0cc8>
+   0:	3a434347 	bcc	10d0d24 <reset_handler+0x10d0c9c>
    4:	35312820 	ldrcc	r2, [r1, #-2080]!	; 0xfffff7e0
    8:	392e343a 	stmdbcc	lr!, {r1, r3, r4, r5, sl, ip, sp}
    c:	732b332e 			; <UNDEFINED> instruction: 0x732b332e
@@ -233,10 +271,8 @@ Disassembly of section .ARM.attributes:
   1c:	094d070d 	stmdbeq	sp, {r0, r2, r3, r8, r9, sl}^
   20:	14041202 	strne	r1, [r4], #-514	; 0xfffffdfe
   24:	17011501 	strne	r1, [r1, -r1, lsl #10]
-  28:	1a011803 	bne	4603c <reset_handler+0x45fe0>
+  28:	1a011803 	bne	4603c <reset_handler+0x45fb4>
   2c:	22061e01 	andcs	r1, r6, #1, 28
   30:	Address 0x0000000000000030 is out of bounds.
-
-
 ```
 
