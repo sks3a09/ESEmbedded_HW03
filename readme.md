@@ -61,7 +61,7 @@ HW03
 1.實驗題目
 ---
 
-觀察C語言是如何pass and return 參數
+觀察C語言是如何 pass and return 參數
 
 2.實驗步驟
 ---
