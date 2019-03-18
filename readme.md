@@ -49,8 +49,19 @@ This is the hw03 sample. Please follow the steps below.
 
 --------------------
 
-- [x] **If you volunteer to give the presentation next week, check this.**
+- [ ] **If you volunteer to give the presentation next week, check this.**
 
 --------------------
 
 **★★★ Please take your note here ★★★**
+
+HW03
+===
+
+# 1.實驗題目
+
+觀察C語言是如何pass and return 參數
+
+# 2.實驗步驟
+
+
