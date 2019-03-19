@@ -269,9 +269,9 @@ Disassembly of section .ARM.attributes:
 
 3.程式執行步驟解析
 
-* 程式首先先執行 reset_handler，並先把 ```r7```和 ```lr``` push 進入stack中，根據變數使用，在stack空出一定的區塊。
-* 程式的一開始是先宣告變數，所以先將宣告的變數先放入stack中。
-* 呼叫sum function，帶有2個參數，先將2個參數存入暫存器```r0``` ```r1```中，跳到 sum function 的起始位置。
+< 程式首先先執行 reset_handler，並先把 ```r7```和 ```lr``` push 進入stack中，根據變數使用，在stack空出一定的區塊。
+< 程式的一開始是先宣告變數，所以先將宣告的變數先放入stack中。
+< 呼叫 sum function，帶有2個參數，先將2個參數存入暫存器```r0``` ```r1```中，跳到 sum function 的起始位置。
  
 ```sum```
 
@@ -284,7 +284,7 @@ Disassembly of section .ARM.attributes:
 * 將使用的stack區域釋放，並將```r7```的值給```sp```。
 * branch 回到 reset_handler。
  
-呼叫arithmetic function，帶有5個參數，將其一放入stack中，另外4個參數存入暫存器```r0``` ```r1``` ```r2``` ```r3```中，跳到arithmetic function 的起始位置。(因為要傳遞的參數大於四個，所以暫存器會不夠用，所以會先將其中的一個放入stack中)
+呼叫 arithmetic function，帶有5個參數，將其一放入stack中，另外4個參數存入暫存器```r0``` ```r1``` ```r2``` ```r3```中，跳到arithmetic function 的起始位置。(因為要傳遞的參數大於四個，所以暫存器會不夠用，所以會先將其中的一個放入stack中)
  
 ```arithmetic```
 
@@ -298,7 +298,7 @@ Disassembly of section .ARM.attributes:
 * 將使用的stack區域釋放，並將```r7```的值給```sp```。
 * branch 回到 reset_handler。
 
-呼叫pointer function，因為使用指標，所以先在暫存器```r1``` ```r2``` ```r3``` 放入三個address(一開始宣告變數時的那三個address)。
+呼叫 pointer function，因為使用指標，所以先在暫存器```r1``` ```r2``` ```r3``` 放入三個address(一開始宣告變數時的那三個address)。
 
 將address搬移到 ```r0``` ```r1``` ```r2```。
 
