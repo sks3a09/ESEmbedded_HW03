@@ -317,9 +317,9 @@ Disassembly of section .ARM.attributes:
 1) 當主程式要呼叫function時，會先將```r7```和 ```lr``` push 進入stack中
 2) 根據AAPCS，傳遞參數會先使用```r0``` ```r1``` ```r2``` ```r3```，如果不夠用會使用到stack。
 3) 執行function時，會先push ```r7```，空出stack空間，並將stack pointer 的值給```r7```。
-4) 傳遞參數的參數會先被 store 到 stack 中。
+4) 執行function時，要傳遞的參數會先被 store 到 stack 中。
 5) 要使用傳遞的參數時，先將參數從 stack load 出來，放入暫存器再使用。
 6) 運算時最後的結果會被放到```r3```中，再 store 到 stack 中。
-7) 要回傳參數時，會先把在 stack 中的結果 load 到```r3```，在把```r3```的值給```r0```進行回傳。
+7) 要回傳參數時，會先把在 stack 中的結果 load 到```r3```，再把```r3```的值給```r0```進行回傳。
 8) 使用pointer傳遞參數時，會把要傳遞的位址放入暫存器中。
 9) 使用pointer接收參數時，會把接收到的位址先放到暫存器中，再將該位址的值存到暫存器中。
