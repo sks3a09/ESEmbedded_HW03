@@ -285,14 +285,14 @@ Disassembly of section .ARM.attributes:
  
  ```sum```
  
- *首先會先push ```r7```。
- *將function 要使用到的stack空間空出來 ，然後將stack pointer 的值給```r7```。
- *將傳遞的參數放入stack中，等待使用時取出。
- *將存入的值取出放入```r2``` ```r3```中，並做加法，存入```r3```中。
- *將```r3```的值放到stack中。
- *最後取出在stack中的值放入```r3```，然後將要return的值放到```r0```中。
- *將使用的stack區域釋放，並將```r7```的值給```sp```。
- *branch 回到 reset_handler。
+ * 首先會先push ```r7```。
+ * 將function 要使用到的stack空間空出來 ，然後將stack pointer 的值給```r7```。
+ * 將傳遞的參數放入stack中，等待使用時取出。
+ * 將存入的值取出放入```r2``` ```r3```中，並做加法，存入```r3```中。
+ * 將```r3```的值放到stack中。
+ * 最後取出在stack中的值放入```r3```，然後將要return的值放到```r0```中。
+ * 將使用的stack區域釋放，並將```r7```的值給```sp```。
+ * branch 回到 reset_handler。
  
  呼叫arithmetic function，帶有5個參數，將其一放入stack中，另外4個參數存入暫存器```r0``` ```r1``` ```r2``` ```r3```中，跳到arithmetic function 的起始位置。(因為要傳遞的參數大於四個，所以暫存器會不夠用，所以會先將其中的一個放入stack中)
  
