@@ -287,7 +287,7 @@ Disassembly of section .ARM.attributes:
  首先會先push ```r7```。
  將function 要使用到的stack空間空出來 ，將stack pointer 的值給```r7```。
  將傳遞的參數放入stack中，等待使用時取出。
- 將存入的值取出放入```r2``````r3```中，並做加法，存入```r3```中。。
+ 將存入的值取出放入```r2``` ```r3```中，並做加法，存入```r3```中。。
  最後將要return的值放到```r0```中。
  將使用的stack區域釋放，並將```r7```的值給```sp```。
  branch 回到 reset_handler。
@@ -324,5 +324,5 @@ branch 回到 reset_handler。
 
 4.觀察結果
 1) 當主程式要呼叫function時，會先將```r7```和 ```lr``` push 進入stack中
-2) 根據AAPCS，傳遞參數會先使用```r0``````r1``````r2``````r3```，如果不夠用會使用到stack。
+2) 根據AAPCS，傳遞參數會先使用```r0``` ```r1``` ```r2``` ```r3```，如果不夠用會使用到stack。
 3) 
