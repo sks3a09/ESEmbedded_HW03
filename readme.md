@@ -285,7 +285,8 @@ Disassembly of section .ARM.attributes:
  
  ```sum```
  
- ```首先會先push ```r7```。
+ ```
+ 首先會先push ```r7```。
  
  將function 要使用到的stack空間空出來 ，然後將stack pointer 的值給```r7```。
  
