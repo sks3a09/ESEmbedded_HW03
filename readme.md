@@ -319,7 +319,7 @@ Disassembly of section .ARM.attributes:
 * 將使用的stack區域釋放，並將```r7```的值給```sp```。
 * branch 回到 reset_handler。
 
-4.觀察結果
+**4.觀察結果**
 
 1) 當主程式要呼叫function時，會先將```r7```和 ```lr``` push 進入stack中
 2) 根據AAPCS，傳遞參數會先使用```r0``` ```r1``` ```r2``` ```r3```，如果不夠用會使用到stack。
