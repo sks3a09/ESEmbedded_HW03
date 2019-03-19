@@ -277,9 +277,9 @@ Disassembly of section .ARM.attributes:
 
 3.程式執行步驟解析
 
-> 程式首先先執行 reset_handler，並先把 ```r7```和 ```lr``` push 進入stack中，根據變數使用，在stack空出一定的區塊。
-> 程式的一開始是先宣告變數，所以先將宣告的變數先放入stack中。
-> 呼叫sum function，帶有2個參數，先將2個參數存入暫存器```r0``` ```r1```中，跳到 sum function 的起始位置。
+> * 程式首先先執行 reset_handler，並先把 ```r7```和 ```lr``` push 進入stack中，根據變數使用，在stack空出一定的區塊。
+> * 程式的一開始是先宣告變數，所以先將宣告的變數先放入stack中。
+> * 呼叫sum function，帶有2個參數，先將2個參數存入暫存器```r0``` ```r1```中，跳到 sum function 的起始位置。
  
 ```sum```
  
