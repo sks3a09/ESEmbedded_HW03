@@ -66,8 +66,8 @@ HW03
 2.calling conventions介紹
 ---
 
-我們在使用函式呼叫時牽涉到的參數傳遞，並不只是單純跳到那個Address執行程式碼再跳回來這麼簡單，呼叫副程式的主程式，需要知道怎麼填參數，副程式才能接到參
-數後進行處理，再將結果，傳給主程式，所以這段協定，稱之為Calling Convention(呼叫協定)。
+我們在使用函式呼叫時牽涉到的參數傳遞，並不只是單純跳到那個Address執行程式碼再跳回來這麼簡單，呼叫副程式的主程式，需要知道怎麼填參數，
+副程式才能接到參數後進行處理，再將結果傳給主程式，所以這段協定稱之為Calling Convention(呼叫協定)。
 
 3.AAPCS  Procedure Call Standard for the ARM® Architecture
 ---
