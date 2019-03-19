@@ -282,7 +282,7 @@ Disassembly of section .ARM.attributes:
 * 呼叫sum function，帶有2個參數，先將2個參數存入暫存器```r0``` ```r1```中，跳到 sum function 的起始位置。
  
 ```sum```
- 
+
 * 首先會先push ```r7```。
 * 將function 要使用到的stack空間空出來 ，然後將stack pointer 的值給```r7```。
 * 將傳遞的參數放入stack中，等待使用時取出。
