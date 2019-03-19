@@ -278,7 +278,9 @@ Disassembly of section .ARM.attributes:
 3.程式執行步驟解析
 
  程式首先先執行 reset_handler，並先把 ```r7```和 ```lr``` push 進入stack中，根據變數使用，在stack空出一定的區塊。
+ 
  程式的一開始是先宣告變數，所以先將宣告的變數先放入stack中。
+ 
  呼叫sum function，帶有2個參數，先將2個參數存入暫存器```r0``` ```r1```中，跳到 sum function 的起始位置。
  
  ```sum```
@@ -300,35 +302,50 @@ Disassembly of section .ARM.attributes:
  branch 回到 reset_handler。
  
  
- 呼叫arithmetic function，帶有5個參數，將其一放入stack中，另外4個參數存入暫存器中(r0 r1 r2 r3)，跳到function 的起始位置。
- 
- (因為要傳遞的參數大於四個，所以暫存器會不夠用，所以會先將其中的一個放入stack中)
+ 呼叫arithmetic function，帶有5個參數，將其一放入stack中，另外4個參數存入暫存器```r0``` ```r1``` ```r2``` ```r3```中，跳到arithmetic function 的起始位置。(因為要傳遞的參數大於四個，所以暫存器會不夠用，所以會先將其中的一個放入stack中)
  
 ```arithmetic```
 
 首先會先push ```r7```。
+
 將function 要使用到的stack空間空出來 ，將stack pointer 的值給```r7```。
-將儲存在暫存器 r0 r1 r2 r3 傳遞的參數放入到stack中，等待使用時取出。
-取出在stack中的值，並對其做函式指定的四則運算。
+
+將儲存在暫存器 ```r0``` ```r1``` ```r2``` ```r3``` 傳遞的參數放入到stack中，等待使用時取出。
+
+將存入在stack中的值取出，並對其做函式指定的四則運算。
+
 再取出被放在stack中傳遞的參數(第五個參數)，繼續做四則運算。
-把最後的結果給r3並放到stack中。
+
+把最後的結果給```r3```並放到stack中。
+
 從stack中取出值後，最後將要return的值放到```r0```中。
+
 將使用的stack區域釋放，並將```r7```的值給```sp```。
+
 branch 回到 reset_handler。
 
-呼叫pointer function，因為使用指標，所以先在暫存器r1 r2 r3 放入三個address(一開始宣告變數時的那三個address)。
-將address搬移到 r0 r1 r2。
+呼叫pointer function，因為使用指標，所以先在暫存器```r1``` ```r2``` ```r3``` 放入三個address(一開始宣告變數時的那三個address)。
+
+將address搬移到 ```r0``` ```r1``` ```r2```。
 
 ```pointer```
 
 首先會先push ```r7```。
+
 將function 要使用到的stack空間空出來 ，將stack pointer 的值給```r7```。
-將儲存在暫存器 r0 r1 r2 傳遞的參數放入到stack中，等待使用時取出。
-將放在stack的位址取出，並將在那個位址的值取出放入暫存器中。
-做運算並將最後結果放入r3，再放入stack。
-最後將結果取出放入r0中。
+
+將儲存在暫存器 ```r0``` ```r1``` ```r2``` 傳遞的參數放入到stack中，等待使用時取出。
+
+先將存放在stack中的位址取出放到暫存器，然後再將在那個位址的值取出放入暫存器中。
+
+做運算並將最後結果放入```r3```，再放入stack。
+
+最後將結果取出放入```r0```中return。
+
 將使用的stack區域釋放，並將```r7```的值給```sp```。
+
 branch 回到 reset_handler。
+
 
 4.觀察結果
 1) 當主程式要呼叫function時，會先將```r7```和 ```lr``` push 進入stack中
