@@ -275,4 +275,19 @@ Disassembly of section .ARM.attributes:
   2c:	22061e01 	andcs	r1, r6, #1, 28
   30:	Address 0x0000000000000030 is out of bounds.
 ```
-
+ 程式首先先執行 reset_handler，並先把 ```r7```和 ```lr``` push 進入stack中，根據變數使用，在stack空出一定的區塊。
+ 程式的一開始是先宣告變數，所以先將宣告的變數先放入stack中。
+ 呼叫sum function，帶有2個參數，先將2個參數存入暫存器中(R0 R1)，跳到function 的起始位置。
+ 
+ ```sum```
+ 
+ 首先會先push ```r7```。
+ 將function 要使用到的stack空間空出來 ，將stack pointer 的值給```r7```。
+ 將傳遞的參數放入stack中，等待使用時取出。
+ 將存入的值取出放入```r2``````r3```中，並做加法，存入```r3```中。。
+ 最後將要return的值放到```r0```中。
+ 將使用的stack區域釋放，並將```r7```的值給```sp```。
+ branch 回到 reset_handler。
+ 
+ (因為接下來要傳遞的參數大於四個，所以暫存器會不夠用，所以會先將其中的一個放入stack中)
+ 呼叫arithmetic function，帶有5個參數，將其一放入stack中，另外4個參數存入暫存器中(r0 r1 r2 r3)，跳到function 的起始位置。
