@@ -66,8 +66,7 @@ HW03
 2.calling conventions介紹
 ---
 
-我們在使用函式呼叫時牽涉到的參數傳遞，並不只是單純跳到那個Address執行程式碼再跳回來這麼簡單，呼叫副程式的主程式，需要知道怎麼填參數，
-副程式才能接到參數後進行處理，再將結果傳給主程式，所以這段協定稱之為Calling Convention(呼叫協定)。
+我們在使用函式呼叫時牽涉到的參數傳遞，並不只是單純跳到那個Address執行程式碼再跳回來這麼簡單，呼叫副程式的主程式，需要知道怎麼填參數，副程式才能接到參數後進行處理，再將結果傳給主程式，所以這段協定稱之為Calling Convention(呼叫協定)。
 
 3.AAPCS  Procedure Call Standard for the ARM® Architecture
 ---
@@ -104,7 +103,7 @@ take a small number of parameters, only registers are used, greatly reducing the
 
 4.實驗步驟
 ---
-1. 設計測試程式 main.c ，從 reset_handler 開始後依序執行，觀察function with 2 parameters 和 function with 5 parameters 的不同
+1. 設計測試程式 main.c ，從 reset_handler 開始後依序執行，觀察 function with 2 parameters 和 function with 5 parameters 和 function using pointer 的不同
 
 main.c
 
@@ -280,17 +279,26 @@ Disassembly of section .ARM.attributes:
 
  程式首先先執行 reset_handler，並先把 ```r7```和 ```lr``` push 進入stack中，根據變數使用，在stack空出一定的區塊。
  程式的一開始是先宣告變數，所以先將宣告的變數先放入stack中。
- 呼叫sum function，帶有2個參數，先將2個參數存入暫存器中(r0 r1)，跳到function 的起始位置。
+ 呼叫sum function，帶有2個參數，先將2個參數存入暫存器```r0``` ```r1```中，跳到 sum function 的起始位置。
  
  ```sum```
  
  首先會先push ```r7```。
- 將function 要使用到的stack空間空出來 ，將stack pointer 的值給```r7```。
+ 
+ 將function 要使用到的stack空間空出來 ，然後將stack pointer 的值給```r7```。
+ 
  將傳遞的參數放入stack中，等待使用時取出。
- 將存入的值取出放入```r2``` ```r3```中，並做加法，存入```r3```中。。
- 最後將要return的值放到```r0```中。
+ 
+ 將存入的值取出放入```r2``` ```r3```中，並做加法，存入```r3```中。
+ 
+ 將```r3```的值放到stack中。
+ 
+ 最後取出在stack中的值放入```r3```，然後將要return的值放到```r0```中。
+ 
  將使用的stack區域釋放，並將```r7```的值給```sp```。
+ 
  branch 回到 reset_handler。
+ 
  
  呼叫arithmetic function，帶有5個參數，將其一放入stack中，另外4個參數存入暫存器中(r0 r1 r2 r3)，跳到function 的起始位置。
  
