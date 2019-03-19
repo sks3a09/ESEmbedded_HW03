@@ -77,18 +77,11 @@ THE BASE PROCEDURE CALL STANDARD
 
 ![](https://i.imgur.com/hF3gmGa.png)
 
-The first four registers r0-r3 (a1-a4) are used to pass argument values into a subroutine and to return a result
-value from a function. They may also be used to hold intermediate values within a routine (but, in general, only
-between subroutine calls). 
+The first four registers r0-r3 (a1-a4) are used to pass argument values into a subroutine and to return a result value from a function. They may also be used to hold intermediate values within a routine (but, in general, only between subroutine calls). 
 
 2. **Subroutine Calls**
 
-Both the ARM and Thumb instruction sets contain a primitive subroutine call instruction, **BL, which performs a
-branch-with-link operation.** The effect of executing BL is to transfer the sequentially next value of the program
-counter **—the return address—into the link register (LR)** and **the destination address into the program counter
-(PC)**. Bit 0 of the link register will be set to 1 if the BL instruction was executed from Thumb state, and to 0 if
-executed from ARM state. The result is to transfer control to the destination address, passing the return address in
-LR as an additional parameter to the called subroutine.
+Both the ARM and Thumb instruction sets contain a primitive subroutine call instruction, **BL, which performs a branch-with-link operation.** The effect of executing BL is to transfer the sequentially next value of the program counter **—the return address—into the link register (LR)** and **the destination address into the program counter (PC)**. Bit 0 of the link register will be set to 1 if the BL instruction was executed from Thumb state, and to 0 if executed from ARM state. The result is to transfer control to the destination address, passing the return address in LR as an additional parameter to the called subroutine.
 
 3. **Result Return**
 
@@ -98,8 +91,7 @@ A Fundamental Data Type that is smaller than 4 bytes is zero- or sign-extended t
 
 4. **Parameter Passing**
 
-The base standard provides for passing arguments in core registers (r0-r3) and on the stack. For subroutines that
-take a small number of parameters, only registers are used, greatly reducing the overhead of a call.
+The base standard provides for passing arguments in core registers (r0-r3) and on the stack. For subroutines that take a small number of parameters, only registers are used, greatly reducing the overhead of a call.
 
 4.實驗步驟
 ---
